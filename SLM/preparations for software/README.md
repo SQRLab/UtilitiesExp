@@ -7,5 +7,5 @@ If they're correctly connected to your computer, please make a few changes to yo
 
 Correction should be made to slmsuite>holography>algorithms.py
 1. In ijcam_to_kxyslm function: 
-      change the shape of b– <span style="color:red">b = b.reshape(-1)</span> before calculating the target.
-2. The null_region parameter shouldn’t be bool type.
+      change the shape of b by adding a command "<span style="color:red">b = b.reshape(-1)</span>" before calculating the target.
+2. The null_region parameter shouldn’t be bool type as written in the function.
