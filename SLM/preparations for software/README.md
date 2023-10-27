@@ -6,9 +6,52 @@ After you finish all those instructions, your computer is equipped with: (1) sof
 If they're correctly connected to your computer, please make a few changes to your "slmsuite" package. These little changes make sure the further programs can work properly.  
 
 Correction should be made to slmsuite>holography>algorithms.py
-1. In ijcam_to_kxyslm function: 
-      change the shape of b by adding a command "<span style="color:red">b = b.reshape(-1)</span>" before calculating the target.
-2. Find this para in the algorithms.py:
+1. In algorithms.py, find the definition of function ijcam_to_knmslm:
+   ```python
+   def ijcam_to_knmslm(self, img, out=None, blur_ij=None, order=3):
+      ''' codes above'''
+      if blur_ij > 0:
+            img = sp_gaussian_filter(img, (blur_ij, blur_ij), output=img, truncate=2)
+
+        cp_img = cp.array(img, dtype=self.dtype)
+        cp.abs(cp_img, out=cp_img)
+        
+        # Perform affine.
+        target = cp_affine_transform(
+            input=cp_img,
+            matrix=M,
+            offset=b,
+            output_shape=self.shape,
+            order=order,
+            output=out,
+            mode="constant",
+            cval=0,
+        )
+   ```
+   add a sentence of `b = b.reshape(-1)` in the middle to get:
+   ``` python
+   if blur_ij > 0:
+            img = sp_gaussian_filter(img, (blur_ij, blur_ij), output=img, truncate=2)
+
+        cp_img = cp.array(img, dtype=self.dtype)
+        cp.abs(cp_img, out=cp_img)
+        
+        b = b.reshape(-1)
+
+        # Perform affine.
+        target = cp_affine_transform(
+            input=cp_img,
+            matrix=M,
+            offset=b,
+            output_shape=self.shape,
+            order=order,
+            output=out,
+            mode="constant",
+            cval=0,
+        )
+   ```
+
+3. Find this para in the algorithms.py:
    ```python
    if self.null_knm is None:
             self.target.fill(0)
