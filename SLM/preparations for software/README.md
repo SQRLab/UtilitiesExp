@@ -9,7 +9,7 @@ Correction should be made to slmsuite>holography>algorithms.py
 1. In ijcam_to_kxyslm function: 
       change the shape of b by adding a command "<span style="color:red">b = b.reshape(-1)</span>" before calculating the target.
 2. Find this para in the algorithms.py:
-   
+   ```python
    if self.null_knm is None:
             self.target.fill(0)
         else:
@@ -30,9 +30,9 @@ Correction should be made to slmsuite>holography>algorithms.py
                         centered=True,
                         circular=True
                     )
-   
-     correct it as:
-   
+     ```
+        correct it as:
+     ```python
      if self.null_knm is None and self.null_region_knm is None:
          self.target.fill(0)
      else:
@@ -54,5 +54,6 @@ Correction should be made to slmsuite>holography>algorithms.py
                      centered=True,
                      circular=True
                  )
+     ```
 
      
