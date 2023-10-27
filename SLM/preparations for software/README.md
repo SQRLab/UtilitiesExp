@@ -12,14 +12,11 @@ Correction should be made to slmsuite>holography>algorithms.py
    if self.null_knm is None:
             self.target.fill(0)
         else:
-            # By default, everywhere is "amplitude free", denoted by nan.
             self.target.fill(np.nan)
 
-            # Now we start setting areas where null is desired. First, zero the blanket region.
             if self.null_region_knm is not None:
                 self.target[self.null_region_knm] = 0
 
-            # Second, zero the regions around the "null points".
             if self.null_knm is not None:
                 all_spots = np.hstack((self.null_knm, self.spot_knm))
                 w = int(2*self.null_radius_knm + 1)
@@ -36,14 +33,12 @@ Correction should be made to slmsuite>holography>algorithms.py
 if self.null_knm is None and self.null_region_knm is None:
     self.target.fill(0)
 else:
-    # By default, everywhere is "amplitude free", denoted by nan.
     self.target.fill(np.nan)
 
-    # Now we start setting areas where null is desired. First, zero the blanket region.
+
     if self.null_region_knm is not None:
         self.target[self.null_region_knm] = 0
 
-    # Second, zero the regions around the "null points".
     if self.null_knm is not None:
         all_spots = np.hstack((self.null_knm, self.spot_knm))
         w = int(2*self.null_radius_knm + 1)
